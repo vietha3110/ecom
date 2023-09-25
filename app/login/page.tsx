@@ -6,6 +6,8 @@ import { useRouter } from 'next/router'
 import { LoginCard } from '@/components/login-card'
 
 export default function Login() {
+    const router = useRouter();
+
     return (
         <div className='w-full h-full flex flex-col mt-10 justify-center items-center'>
             <LoginCard/>
