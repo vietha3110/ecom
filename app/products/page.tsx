@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import products from '../../json/products.json'
+import products from '../../json/items.json'
 import {
     Card,
     CardContent,
@@ -7,27 +7,37 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-  } from '@/components/ui/card'
-  
+} from '@/components/ui/card'
+import { Plus } from 'lucide-react'
+import Image from 'next/image'
 export default async function Products() {
     return (
-        <div className='flex p-4'>
+        <div className='flex mx-8 min-h-screen flex-col'>
+            <div className='h-[100px]'></div>
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-4'>
                 {
                     products.map(product => <div key={product.id}>
-                        <Card className='w-full h-full'>
-                            <CardHeader>
+                        <Card className='w-full h-[350px]'>
+                            <CardHeader className='w-full h-[80px]'>
                                 <CardTitle>
                                     <Link href={`/products/${product.id}`} className='text-blue-600'>
                                         {product.name}
                                     </Link>
                                 </CardTitle>
                             </CardHeader>
-                            <CardContent>
-                                <CardDescription>{product.description}</CardDescription>
+                            <CardContent className='h-[200px] w-full flex justify-center items-center'>
+                                <Image
+                                    src='/images/bokho.jpeg'
+                                    alt='bo kho'
+                                    width={180}
+                                    height={100}
+                                    loading='lazy'
+                                    className='rounded-full'
+                                />    
                             </CardContent>
-                            <CardFooter>
-                                {product.keywords}
+                            <CardFooter className='flex flex-row justify-between h-[60px]'>
+                                <div>Price: {product.price}</div>
+                                <Plus />
                             </CardFooter>
                         </Card>
 

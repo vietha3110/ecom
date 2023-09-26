@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -14,23 +14,26 @@ datasource db {
 model User {
   id String @id @default(uuid())
   email String @unique
-  name String 
-  address String 
-  phone Int
+  name String @db.VarChar(255)
+  address String @db.VarChar(500)
+  phone Int? @unique 
   orders Order []  
+  cart Cart?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Product {
   id String @id @default(uuid())
-  name String 
-  description String
+  name String @db.VarChar(255)
+  description String @db.VarChar(1000)
   quantitive Int
   price Float
   discount Float
   order Order @relation(fields: [order_id], references: [id])
   order_id String
+  cart Cart @relation(fields: [cart_id], references: [id])
+  cart_id String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -40,6 +43,15 @@ model Order {
   user User @relation(fields: [user_id], references: [id])
   user_id String
   products Product[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Cart {
+  id String @id @default(uuid())
+  user User? @relation(fields: [user_id], references: [id])
+  user_id String @unique
+  products Product []
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
