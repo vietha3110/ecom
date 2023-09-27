@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 export default function Home() {
   return (
-    <main className='md:flex min-h-screen md:flex-col md:mx-8 sm:mx-4 sm:flex-col'>
+    <main className='md:flex min-h-screen md:flex-col md:mx-8 sm:mx-4 sm:flex-cols'>
       <div className='w-full '>
         <div className='h-[100px]'></div>
         <div className='w-full flex flex-row'>

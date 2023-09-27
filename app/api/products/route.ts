@@ -4,7 +4,7 @@ import { NextResponse} from 'next/server';
 export async function GET() {
     try {
         const products = await db.product.findMany();
-        return NextResponse.json({ products }, { status: 200 });
+        return NextResponse.json(products, { status: 200 });
     } catch (e) {
         console.log(e)
         return NextResponse.json({ message: 'There is an error. Please try again' }, { status: 500 });

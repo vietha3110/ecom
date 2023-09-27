@@ -1,61 +1,68 @@
+'use client'
 import Link from 'next/link'
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/card'
-import { Plus } from 'lucide-react'
-import Image from 'next/image'
-import { db } from '@/lib/db'
+import { Card, CardHeader, CardBody, CardFooter, Stack, Heading, Text, Divider, ButtonGroup, Image } from '@chakra-ui/react'
+import { Button } from '@/components/ui/button'
+import { useQuery } from '@tanstack/react-query'
 
-async function getProducts() {
-    const res = await db.product.findMany(
-        {
-            orderBy: {
-                createdAt: 'desc'
-            }
+
+
+export default function Products() {
+    const {isError, data, isLoading, error } = useQuery({
+        queryKey: ['products'],
+        queryFn: async () => {
+            const res = await fetch(`/api/products/`); 
+            const data = await res.json()
+            return data;
         }
-    );
-    return res;
-}
-
-export default async function Products() {
-    const products = await getProducts();
+    })
+    if (isLoading || !data) {
+        console.log(data)
+        return (
+            <div>Loading</div>
+        )
+    } 
+    if (isError) {
+        return <span>Error, Please try again</span>
+    }
+    
     return (
         <div className='flex mx-8 min-h-screen flex-col'>
             <div className='h-[100px]'></div>
-            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-4'>
+            <div className='w-full lg:grid lg:grid-cols-4 gap-4 md:grid md:grid-cols-3'>
                 {
-                    products.map(product => <div key={product.id}>
-                        <Card className='w-full h-[350px]'>
-                            <CardHeader className='w-full h-[80px]'>
-                                <CardTitle>
-                                    <Link href={`/products/${product.id}`} className='text-blue-600'>
-                                        {product.name}
-                                    </Link>
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent className='h-[200px] w-full flex justify-center items-center'>
+                    data.map((product: {id: string, name: string, description: string, price: number}) =>
+                        <Card maxW='sm' key={product.id}>
+                            <Link key={product.id} href={`/products/${product.id}`}>
                                 <Image
                                     src='/images/bokho.jpeg'
-                                    alt='bo kho'
-                                    width={180}
-                                    height={100}
-                                    loading='lazy'
-                                    className='rounded-full'
-                                />    
-                            </CardContent>
-                            <CardFooter className='flex flex-row justify-between h-[60px]'>
-                                <div>Price: {product.price}</div>
-                                <Plus />
+                                    alt='product'
+                                    borderRadius='lg'
+                                />
+                                <CardBody>
+                                    <Stack mt='6' spacing='3'>
+                                        <Heading size='md'>{product.name}</Heading>
+                                    <Text>
+                                        {product.description}
+                                    </Text>
+                                    <Text color='blue.600' fontSize='2xl'>
+                                        {product.price}
+                                    </Text>
+                                    </Stack>
+                                </CardBody>
+                                <Divider />
+                            </Link>
+                            <CardFooter>
+                            <ButtonGroup px={2} display={'flex'} justifyContent={'space-between'} w={'100%'}>
+                                <Button >
+                                    Buy now
+                                </Button>
+                                <Button >
+                                    Add to cart
+                                </Button>
+                                </ButtonGroup>
                             </CardFooter>
                         </Card>
-
-                        
-                    </div>)
+                    )
                 }
             </div>
         </div>
