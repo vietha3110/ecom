@@ -30,10 +30,8 @@ model Product {
   quantitive Int
   price Float
   discount Float
-  order Order @relation(fields: [order_id], references: [id])
-  order_id String
-  cart Cart @relation(fields: [cart_id], references: [id])
-  cart_id String
+  orders Order[]
+  carts Cart[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -42,7 +40,8 @@ model Order {
   id String @id @default(uuid())
   user User @relation(fields: [user_id], references: [id])
   user_id String
-  products Product[]
+  product Product @relation(fields: [product_id], references: [id])
+  product_id String 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -51,7 +50,8 @@ model Cart {
   id String @id @default(uuid())
   user User? @relation(fields: [user_id], references: [id])
   user_id String @unique
-  products Product []
+  product Product @relation(fields: [product_id], references: [id])
+  product_id String 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
