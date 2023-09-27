@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import products from '../../json/items.json'
 import {
     Card,
     CardContent,
@@ -10,7 +9,21 @@ import {
 } from '@/components/ui/card'
 import { Plus } from 'lucide-react'
 import Image from 'next/image'
+import { db } from '@/lib/db'
+
+async function getProducts() {
+    const res = await db.product.findMany(
+        {
+            orderBy: {
+                createdAt: 'desc'
+            }
+        }
+    );
+    return res;
+}
+
 export default async function Products() {
+    const products = await getProducts();
     return (
         <div className='flex mx-8 min-h-screen flex-col'>
             <div className='h-[100px]'></div>

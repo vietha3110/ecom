@@ -1,8 +1,23 @@
-import products from '../../../json/items.json'
+import { db } from '@/lib/db';
+import { FC } from 'react';
 
-export default function ProductDetail({ params }: { params: { id: string } }) {
-    const product = products.find((product) => product.id === params.id);
+interface ProductDetailProps {
+    params: {
+        id: string
+    }
+}
 
+async function getProduct(id: string) {
+    const product = await db.product.findFirst({
+        where: {
+            id: id
+        }
+    });
+    return product;
+}
+
+const ProductDetailPage: FC<ProductDetailProps> = async ({ params }) => {
+    const product = await getProduct(params.id);
     if (!product) {
         return <div>Product not found</div>;
     }
@@ -13,10 +28,11 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
             <div>
                 <h1>Product: {params.id}</h1>
                 <h2>Name: {product.name}</h2>
-                {/* You can access other properties of the product here */}
                 <p>Description: {product.description}</p>
                 <p>Price: ${product.price}</p>
             </div>
         </div>
     );
 }
+
+export default ProductDetailPage
