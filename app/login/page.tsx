@@ -4,13 +4,20 @@ import { auth, provider } from '@/lib/firebase-config'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { LoginCard } from '@/components/login-card'
+import { SignUpCard } from '@/components/signup-card'
 
 export default function Login() {
-    const router = useRouter();
-
+    const [selectedLogin, setSelectedLogin] = useState<Boolean>(true);
     return (
-        <div className='w-full h-full flex flex-col mt-10 justify-center items-center'>
-            <LoginCard/>
+        <div className='w-full min-h-screen flex flex-col items-center'>
+            <div className='h-[400px]'></div>
+            {/* {
+                selectedLogin && <LoginCard />
+            }
+            {
+                !selectedLogin && <div>here</div>
+            } */}
+            <SignUpCard/>
         </div>
     )
 }

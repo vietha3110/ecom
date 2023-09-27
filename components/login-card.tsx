@@ -15,10 +15,7 @@ export function LoginCard() {
   return (
     <Card className='w-1/3' >
         <CardHeader className='space-y-1 flex justify-center items-center'>
-            <CardTitle className='text-2xl'>Create an account</CardTitle>
-            <CardDescription>
-                Enter your email below to create your account
-            </CardDescription>
+            <CardTitle className='text-2xl'>Log in</CardTitle>
         </CardHeader>
         <CardContent className='grid gap-4'>
             <div className='grid grid-cols-2 gap-6'>
@@ -48,8 +45,11 @@ export function LoginCard() {
                 <Input id='password' type='password' />
             </div>
         </CardContent>
-        <CardFooter>
-        <Button className='w-full'>Create account</Button>
+        <CardFooter className='flex flex-col'>
+              <Button className='w-full'>Login</Button>
+              <span className='pt-2'>
+                  Create new account
+              </span>
         </CardFooter>
     </Card>
   )
