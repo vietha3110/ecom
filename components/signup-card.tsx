@@ -10,8 +10,17 @@ import {
 } from '@/components/ui/card'
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Dispatch, SetStateAction, FC} from 'react'
 
-export function SignUpCard() {
+interface LoginCardProps {
+    setSelectedLogin: Dispatch<SetStateAction<boolean>>
+}
+
+export const SignUpCard:FC<LoginCardProps> = (props: LoginCardProps) => {
+    let setState = props.setSelectedLogin;
+    const handleClick = () => {
+        setState(true);
+    }
   return (
     <Card className='w-1/3' >
         <CardHeader className='space-y-1 flex justify-center items-center'>
@@ -44,7 +53,7 @@ export function SignUpCard() {
         </CardContent>
         <CardFooter className='flex flex-col'>
             <Button className='w-full'>Create new account</Button>
-            <span className='pt-2'>
+            <span className='pt-2 cursor-pointer' onClick={handleClick}>
                 Login
             </span>
         </CardFooter>
