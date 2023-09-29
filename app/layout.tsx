@@ -42,16 +42,16 @@ export default function RootLayout({
   ];
   return (
     <html lang='en'>
-      <body className='w-full m-0'>
+      <body className='w-full m-0 relative'>
         <QueryProviders>
-          <ThemeProvider
+          {/* <ThemeProvider
             attribute='class'
             defaultTheme='system'
             enableSystem
             disableTransitionOnChange
-          >
+          > */}
             <Providers>
-              <nav className='w-full px-4 flex flex-row h-[60px] border-b-2 border-b-slate-100 items-center'>
+              <nav className='w-full px-4 flex flex-row h-[60px] border-b-2 border-b-slate-100 items-center absolute top-0'>
                 <Link href={'/'}>
                   <Image
                     src='/images/mamalogo.jpeg'
@@ -76,7 +76,7 @@ export default function RootLayout({
               </nav>
               {children}
             </Providers>
-          </ThemeProvider>
+          {/* </ThemeProvider> */}
         </QueryProviders>
       </body>
     </html>

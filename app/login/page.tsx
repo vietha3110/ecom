@@ -1,5 +1,4 @@
 'use client' 
-import { getRedirectResult, signInWithRedirect } from 'firebase/auth'
 import { useState, useEffect } from 'react'
 import { LoginCard } from '@/components/login-card'
 import { SignUpCard } from '@/components/signup-card'

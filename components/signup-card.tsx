@@ -12,67 +12,106 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Dispatch, SetStateAction, FC, useState} from 'react'
 import { useRouter } from 'next/navigation'
-import signUp from "@/app/firebase/auth/signUp"
+import { checkEmail } from '@/utils/check/formCheck'
+import { AlertCircle, FileWarning, Terminal } from 'lucide-react'
+import { useQueries, useMutation } from "@tanstack/react-query"
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from '@/components/ui/alert'
+
+import signUp from '@/app/firebase/auth/signUp'
+import {useForm, SubmitHandler} from 'react-hook-form'
+
 
 interface LoginCardProps {
     setSelectedLogin: Dispatch<SetStateAction<boolean>>
 }
 
-export const SignUpCard:FC<LoginCardProps> = (props: LoginCardProps) => {
+interface InputUser {
+    name: string,
+    phone: number, 
+    address: string, 
+    email: string
+}
+
+
+export const SignUpCard:FC<LoginCardProps> =  (props: LoginCardProps) => {
     let setState = props.setSelectedLogin;
     const handleClick = () => {
         setState(true);
     }
-    const [email, setEmail] = useState('');
-    const [password, setPassWord] = useState('');
-    const [name, setName] = useState(''); 
-    const [address, setAddress] = useState('');
-    const [phone, setPhone] = useState('')
     const router = useRouter();
-    const handleForm = async () => {
-        const { result, error } = await signUp(email, password);
+    //set error
+   
+    //set err
 
-        if (error) {
-            return console.log(error)
-        }
+    const { register, handleSubmit } = useForm<InputUser>();
+    const onSubmit: SubmitHandler<InputUser> = (data) => console.log(data);
+    
 
-        // else successful
-        
-        console.log(result)
-        return router.push('/')
-    }
+    // const handleForm = async () => {
+    //     const { result, error } = await signUp(email, password);
+
+    //     if (error) {
+    //         const err: { code?: string } = error;
+    //         return;
+    //     } else {
+
+    //     }
+       
+    // }
   return (
     <Card className='w-1/3' >
-        <CardHeader className='space-y-1 flex justify-center items-center'>
-            <CardTitle className='text-2xl'>Create new account</CardTitle>
-            <CardDescription>
-                It’s quick and easy.
-            </CardDescription>
-        </CardHeader>
-        <CardContent className='grid gap-4'>
-            <div className='grid gap-2'>
-                <Label htmlFor='name'>Name</Label>
-                <Input id='name' type='name' placeholder='Jane Doe' />
-            </div>
-            <div className='grid gap-2'>
-                <Label htmlFor='email'>Email</Label>
-                <Input id='email' type='email' placeholder='m@example.com' onChange={e=>setEmail(e.target.value)}/>
-            </div>
-            <div className='grid gap-2'>
-                <Label htmlFor='password'>Password</Label>
-                <Input id='password' type='password' placeholder='password' onChange={e=>setPassWord(e.target.value)}/>
-            </div>
-            <div className='grid gap-2'>
-                <Label htmlFor='phone'>Phone</Label>
-                <Input id='phone' type='phone' placeholder='xxxxxxxxx' />
-            </div> 
-            <div className='grid gap-2'>
-                <Label htmlFor='address'>Address</Label>
-                <Input id='address' type='address' placeholder='123 St, City, State' />
-            </div>   
-        </CardContent>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <CardHeader className='space-y-1 flex justify-center items-center'>
+                <CardTitle className='text-2xl'>Create new account</CardTitle>
+                <CardDescription>
+                    Its quick and easy.
+                </CardDescription>
+            </CardHeader>
+            <CardContent className='grid gap-4'>
+                <div className='grid gap-2'>
+                    <Label htmlFor='name'>Name</Label>
+                    <Input
+                        id='name'
+                        type='name'
+                        placeholder='Jane Doe'
+                        {...register('name'), {required: true, maxLength: 255, minLength: 1}}
+                    />
+                </div>
+                <div className='grid gap-2'>
+                    <Label htmlFor='email'>Email</Label>
+                    <Input
+                        id='email'
+                        type='email'
+                        placeholder='example@gmail.com'
+                        {...register('email'), {required: true, pattern: '/[A-Za-z]{3}/'}}
+                    />
+                </div>
+                <div className='grid gap-2'>
+                    <Label htmlFor='password'>Password</Label>
+                    <Input
+                        id='password'
+                        type='password'
+                        placeholder='password'
+                        autoComplete='on'
+                        {...register('email', {required: true, minLength: 6, maxLength: 20})}
+                    />
+                </div>
+                <div className='grid gap-2'>
+                    <Label htmlFor='phone'>Phone</Label>
+                    <Input id='phone' type='phone' placeholder='xxxxxxxxx'/>
+                </div>
+                <div className='grid gap-2'>
+                    <Label htmlFor='address'>Address</Label>
+                    <Input id='address' type='address' placeholder='123 St, City, State'/>
+                </div>
+            </CardContent>
+        </form>
         <CardFooter className='flex flex-col'>
-            <Button className='w-full' onClick={handleForm}>Create new account</Button>
+            <Button className='w-full'>Create new account</Button>
             <span className='pt-2 cursor-pointer' onClick={handleClick}>
                 Login
             </span>
