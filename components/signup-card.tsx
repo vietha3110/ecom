@@ -49,7 +49,7 @@ export const SignUpCard:FC<LoginCardProps> =  (props: LoginCardProps) => {
     //set err
 
     const { register, handleSubmit } = useForm<InputUser>();
-    const onSubmit: SubmitHandler<InputUser> =  (data) => async()=> {
+    const onSubmit: SubmitHandler<InputUser> =  (async(data) => {
         const { result, error } = await signUp(data.email, data.password);
 
         if (error) {
@@ -60,20 +60,10 @@ export const SignUpCard:FC<LoginCardProps> =  (props: LoginCardProps) => {
             router.push('/')
         }
 
-    };
+    });
     
 
-    // const handleForm = async () => {
-    //     const { result, error } = await signUp(email, password);
-
-    //     if (error) {
-    //         const err: { code?: string } = error;
-    //         return;
-    //     } else {
-
-    //     }
-       
-    // }
+   
   return (
     <Card className='w-1/3' >
         <form onSubmit={handleSubmit(onSubmit)}>
