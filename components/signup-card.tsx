@@ -54,9 +54,10 @@ export const SignUpCard:FC<LoginCardProps> =  (props: LoginCardProps) => {
 
         if (error) {
             const err: { code?: string } = error;
+            console.log(err)
             return;
         } else {
-            
+            router.push('/')
         }
 
     };

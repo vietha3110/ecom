@@ -11,7 +11,14 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Dispatch, SetStateAction, FC, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import logIn from '@/app/firebase/auth/login'
+import { useQueries, useMutation } from '@tanstack/react-query'
+import {useForm, SubmitHandler} from 'react-hook-form'
 
+interface Auth {
+    email: string,
+    password: string
+}
 
 interface LoginCardProps {
     setSelectedLogin: Dispatch<SetStateAction<boolean>>
@@ -21,15 +28,22 @@ export const LoginCard:FC<LoginCardProps> = (props: LoginCardProps) => {
     const handleClick = () => {
         setState(false);
     }
-    const [email, setEmail] = useState('');
-    const [password, setPassWord] = useState('');
+   
     const router = useRouter();
-    const handleForm = async () => {
-        
-    }
+    const { register, handleSubmit } = useForm<Auth>();
+    const onSubmit: SubmitHandler<Auth> = (async (data) => {
+        const { result, error } = await logIn(data.email, data.password); 
+        if (error) {
+            console.log(error);
+        } else {
+            console.log(result)
+        }
+    })
+
+
     return (
             <Card className='w-1/3' >
-                <form action="">
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <CardHeader className='space-y-1 flex justify-center items-center'>
                         <CardTitle className='text-2xl'>Log in</CardTitle>
                     </CardHeader>
@@ -54,15 +68,25 @@ export const LoginCard:FC<LoginCardProps> = (props: LoginCardProps) => {
                         </div>
                         <div className='grid gap-2'>
                             <Label htmlFor='email'>Email</Label>
-                            <Input id='email' type='email' placeholder='m@example.com' />
+                            <Input
+                                id='email'
+                                type='email'
+                                placeholder='m@example.com'
+                                {...register('email', {required: true})}
+                            />
                         </div>
                         <div className='grid gap-2'>
                             <Label htmlFor='password'>Password</Label>
-                            <Input id='password' type='password' autoComplete='on' />
+                            <Input
+                                id='password'
+                                type='password'
+                                autoComplete='on'
+                                {...register('password', {required: true, minLength:6, maxLength: 20})}
+                            />
                         </div>
                     </CardContent>
                     <CardFooter className='flex flex-col'>
-                        <Button className='w-full text-md'>Login</Button>
+                        <Button className='w-full text-md' type='submit'>Login</Button>
                         <span className='pt-4 cursor-pointer' onClick={handleClick}>
                             Dont have an account? Sign up now!
                         </span>
