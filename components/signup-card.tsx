@@ -33,7 +33,8 @@ interface InputUser {
     name: string,
     phone: number, 
     address: string, 
-    email: string
+    email: string,
+    password: string
 }
 
 
@@ -48,7 +49,17 @@ export const SignUpCard:FC<LoginCardProps> =  (props: LoginCardProps) => {
     //set err
 
     const { register, handleSubmit } = useForm<InputUser>();
-    const onSubmit: SubmitHandler<InputUser> = (data) => console.log(data);
+    const onSubmit: SubmitHandler<InputUser> =  (data) => async()=> {
+        const { result, error } = await signUp(data.email, data.password);
+
+        if (error) {
+            const err: { code?: string } = error;
+            return;
+        } else {
+            
+        }
+
+    };
     
 
     // const handleForm = async () => {
@@ -78,17 +89,17 @@ export const SignUpCard:FC<LoginCardProps> =  (props: LoginCardProps) => {
                         id='name'
                         type='name'
                         placeholder='Jane Doe'
-                        {...register('name'), {required: true, maxLength: 255, minLength: 1}}
+                        {...register('name')}      
                     />
                 </div>
                 <div className='grid gap-2'>
                     <Label htmlFor='email'>Email</Label>
                     <Input
-                        id='email'
-                        type='email'
-                        placeholder='example@gmail.com'
-                        {...register('email'), {required: true, pattern: '/[A-Za-z]{3}/'}}
-                    />
+                          id='email'
+                          type='email'
+                          placeholder='m@example.com'
+                          {...register('email')}
+                      />
                 </div>
                 <div className='grid gap-2'>
                     <Label htmlFor='password'>Password</Label>
@@ -97,25 +108,36 @@ export const SignUpCard:FC<LoginCardProps> =  (props: LoginCardProps) => {
                         type='password'
                         placeholder='password'
                         autoComplete='on'
-                        {...register('email', {required: true, minLength: 6, maxLength: 20})}
+                        {...register('password')}
                     />
                 </div>
                 <div className='grid gap-2'>
                     <Label htmlFor='phone'>Phone</Label>
-                    <Input id='phone' type='phone' placeholder='xxxxxxxxx'/>
+                    <Input
+                        id='phone'
+                        type='phone'
+                        placeholder='xxxxxxxxx'
+                        {...register('phone')}
+                    />
                 </div>
                 <div className='grid gap-2'>
                     <Label htmlFor='address'>Address</Label>
-                    <Input id='address' type='address' placeholder='123 St, City, State'/>
+                    <Input
+                        id='address'
+                        type='address'
+                        placeholder='123 St, City, State'
+                        {...register('address')}
+                    />
                 </div>
             </CardContent>
+        
+            <CardFooter className='flex flex-col'>
+                <Button className='w-full' type='submit'>Create new account</Button>
+                <span className='pt-2 cursor-pointer' onClick={handleClick}>
+                    Login
+                </span>
+            </CardFooter>
         </form>
-        <CardFooter className='flex flex-col'>
-            <Button className='w-full'>Create new account</Button>
-            <span className='pt-2 cursor-pointer' onClick={handleClick}>
-                Login
-            </span>
-        </CardFooter>
     </Card>
   )
 }
