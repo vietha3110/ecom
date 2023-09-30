@@ -34,7 +34,8 @@ export const LoginCard:FC<LoginCardProps> = (props: LoginCardProps) => {
     const onSubmit: SubmitHandler<Auth> = (async (data) => {
         const { result, error } = await logIn(data.email, data.password); 
         if (error) {
-            console.log(error);
+            const err: {code?: string} = error
+            console.log(err.code);
         } else {
             console.log(result)
         }
