@@ -37,7 +37,13 @@ export const LoginCard:FC<LoginCardProps> = (props: LoginCardProps) => {
             const err: {code?: string} = error
             console.log(err.code);
         } else {
-            console.log(result)
+            if (result) {
+                const auth = result.user;
+                const token: string = auth.accessToken;
+                localStorage.setItem('token', token);
+                router.push('/');
+            }
+           
         }
     })
 

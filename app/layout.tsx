@@ -1,3 +1,4 @@
+'use client'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
@@ -9,13 +10,14 @@ import { Button } from '@/components/ui/button'
 import { ShoppingBasket, Menu } from 'lucide-react'
 import { Providers } from './providers'
 import QueryProviders from './queryProdivers'
-
+import { UserDropDown } from '@/components/user-dropdown'
+import { useEffect, useState } from 'react'
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata: Metadata = {
-  title: 'Ecommerce',
-  description: 'Buy and sell everything',
-}
+// export const metadata: Metadata = {
+//   title: 'Ecommerce',
+//   description: 'Buy and sell everything',
+// }
 
 export default function RootLayout({
   children,
@@ -35,11 +37,15 @@ export default function RootLayout({
       id: 3, 
       name: 'payment'
     },
-    {
-      id: 4, 
-      name: 'login'
-    },
   ];
+  const [isLogin, setIsLogin] = useState<Boolean>(false);
+  useEffect(() => {
+    const token = localStorage.token; 
+    if (token) {
+      setIsLogin(true)
+    }
+  }, [setIsLogin])
+
   return (
     <html lang='en'>
       <body className='w-full m-0 relative'>
@@ -68,6 +74,17 @@ export default function RootLayout({
                         {item.name}
                       </Link>
                     </li>)}
+                  <li>
+                    {
+                      !isLogin && <Link href={`/login`} className='flex items-center justify-center h-full'>
+                      Login
+                    </Link>
+                    } 
+                    {
+                      isLogin && <UserDropDown/>
+                    }
+                        
+                    </li>
                     <li>
                       <ModeToggle/>
                     </li>
