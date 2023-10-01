@@ -12,6 +12,7 @@ import { Providers } from './providers'
 import QueryProviders from './queryProdivers'
 import { UserDropDown } from '@/components/user-dropdown'
 import { useEffect, useState } from 'react'
+import AuthProvider, { useAuth } from './auth-provider'
 const inter = Inter({ subsets: ['latin'] })
 
 // export const metadata: Metadata = {
@@ -38,13 +39,7 @@ export default function RootLayout({
       name: 'payment'
     },
   ];
-  const [isLogin, setIsLogin] = useState<Boolean>(false);
-  useEffect(() => {
-    const token = localStorage.token; 
-    if (token) {
-      setIsLogin(true)
-    }
-  }, [setIsLogin])
+  const { isAuth, setIsAuth } = useAuth();
 
   return (
     <html lang='en'>
@@ -56,43 +51,46 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           > */}
-            <Providers>
-              <nav className='w-full px-4 flex flex-row h-[60px] border-b-2 border-b-slate-100 items-center absolute top-0'>
-                <Link href={'/'}>
-                  <Image
-                    src='/images/mamalogo.jpeg'
-                    alt='logo'
-                    width={30}
-                    height={30}
-                    className='flex flex-grow-0'
-                  />
-                </Link>
-                <div className='w-full flex flex-row justify-end'>
-                  <ul className='flex flex-row justify-between w-1/3'>
-                    {items.map(item => <li key={item.id} className='hover:bg-slate-100 w-[6rem] text-center'>
-                      <Link href={`/${item.name}`} className='flex items-center justify-center h-full'>
-                        {item.name}
-                      </Link>
-                    </li>)}
-                  <li>
-                    {
-                      !isLogin && <Link href={`/login`} className='flex items-center justify-center h-full'>
-                      Login
-                    </Link>
-                    } 
-                    {
-                      isLogin && <UserDropDown/>
-                    }
-                        
-                    </li>
+          <AuthProvider
+          >
+              <Providers>
+                {/* <nav className='w-full px-4 flex flex-row h-[60px] border-b-2 border-b-slate-100 items-center absolute top-0'>
+                  <Link href={'/'}>
+                    <Image
+                      src='/images/mamalogo.jpeg'
+                      alt='logo'
+                      width={30}
+                      height={30}
+                      className='flex flex-grow-0'
+                    />
+                  </Link>
+                  <div className='w-full flex flex-row justify-end'>
+                    <ul className='flex flex-row justify-between w-1/3'>
+                      {items.map(item => <li key={item.id} className='hover:bg-slate-100 w-[6rem] text-center'>
+                        <Link href={`/${item.name}`} className='flex items-center justify-center h-full'>
+                          {item.name}
+                        </Link>
+                      </li>)}
                     <li>
-                      <ModeToggle/>
-                    </li>
-                  </ul>
-                </div>
-              </nav>
-              {children}
-            </Providers>
+                      {
+                        !isAuth && <Link href={`/login`} className='flex items-center justify-center h-full'>
+                        Login
+                      </Link>
+                      }
+                      {
+                        isAuth && <UserDropDown/>
+                      }
+              
+                      </li>
+                      <li>
+                        <ModeToggle/>
+                      </li>
+                    </ul>
+                  </div>
+                </nav> */}
+                {children}
+              </Providers>
+            </AuthProvider>
           {/* </ThemeProvider> */}
         </QueryProviders>
       </body>

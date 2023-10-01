@@ -7,6 +7,7 @@ export default async function logIn(email: string, password: string) {
     let result = null, error = null;
     try {
         result = await signInWithEmailAndPassword(auth, email, password);
+       
     } catch (e) {
         error = e;
     }

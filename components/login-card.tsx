@@ -14,7 +14,7 @@ import { useRouter } from 'next/navigation'
 import logIn from '@/app/firebase/auth/login'
 import { useQueries, useMutation } from '@tanstack/react-query'
 import {useForm, SubmitHandler} from 'react-hook-form'
-
+import { useAuth } from "@/app/auth-provider"
 interface Auth {
     email: string,
     password: string
@@ -25,6 +25,7 @@ interface LoginCardProps {
 }
 export const LoginCard:FC<LoginCardProps> = (props: LoginCardProps) => {
     let setState = props.setSelectedLogin;
+    const { isAuth, setIsAuth } = useAuth();
     const handleClick = () => {
         setState(false);
     }
@@ -38,9 +39,10 @@ export const LoginCard:FC<LoginCardProps> = (props: LoginCardProps) => {
             console.log(err.code);
         } else {
             if (result) {
-                const auth = result.user;
-                const token: string = auth.accessToken;
+                const user = result.user;
+                const token = user.accessToken;
                 localStorage.setItem('token', token);
+                setIsAuth(true);
                 router.push('/');
             }
            
