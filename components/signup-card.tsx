@@ -80,7 +80,7 @@ export const SignUpCard:FC<LoginCardProps> =  (props: LoginCardProps) => {
                         id='name'
                         type='name'
                         placeholder='Jane Doe'
-                        {...register('name')}      
+                        {...register('name', {required: true, minLength: 2, maxLength: 255})}      
                     />
                 </div>
                 <div className='grid gap-2'>
@@ -89,7 +89,7 @@ export const SignUpCard:FC<LoginCardProps> =  (props: LoginCardProps) => {
                           id='email'
                           type='email'
                           placeholder='m@example.com'
-                          {...register('email')}
+                          {...register('email', { required: true })}
                       />
                 </div>
                 <div className='grid gap-2'>
@@ -99,7 +99,7 @@ export const SignUpCard:FC<LoginCardProps> =  (props: LoginCardProps) => {
                         type='password'
                         placeholder='password'
                         autoComplete='on'
-                        {...register('password')}
+                        {...register('password', {required: true, minLength: 6, maxLength: 20})}
                     />
                 </div>
                 <div className='grid gap-2'>
@@ -108,7 +108,7 @@ export const SignUpCard:FC<LoginCardProps> =  (props: LoginCardProps) => {
                         id='phone'
                         type='phone'
                         placeholder='xxxxxxxxx'
-                        {...register('phone')}
+                        {...register('phone', {required: true, minLength: 10, maxLength: 255})}
                     />
                 </div>
                 <div className='grid gap-2'>
@@ -117,7 +117,7 @@ export const SignUpCard:FC<LoginCardProps> =  (props: LoginCardProps) => {
                         id='address'
                         type='address'
                         placeholder='123 St, City, State'
-                        {...register('address')}
+                        {...register('address', {required: true, minLength: 10, maxLength: 255})}
                     />
                 </div>
             </CardContent>
