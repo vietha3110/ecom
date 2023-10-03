@@ -22,7 +22,8 @@ import {
 } from '@/components/ui/alert'
 
 import signUp from '@/app/firebase/auth/signUp'
-import {useForm, SubmitHandler} from 'react-hook-form'
+import { useForm, SubmitHandler } from 'react-hook-form'
+import { FirebaseUser } from '@/lib/userFirebaseInterface'
 
 
 interface LoginCardProps {
@@ -50,7 +51,7 @@ export const SignUpCard:FC<LoginCardProps> =  (props: LoginCardProps) => {
 
     const { register, handleSubmit } = useForm<InputUser>();
     const onSubmit: SubmitHandler<InputUser> =  (async(data) => {
-        const { result, error } = await signUp(data.email, data.password);
+        const { user, error } = await signUp(data.email, data.password);
 
         if (error) {
             const err: { code?: string } = error;
@@ -59,6 +60,21 @@ export const SignUpCard:FC<LoginCardProps> =  (props: LoginCardProps) => {
         } else {
             // router.push('/')
             //access token save local storage
+            if (user && 'accessToken' in user) {
+                const token = user.accessToken as FirebaseUser;
+                console.log('signup token:', token)
+                localStorage.setItem('token', JSON.stringify(token));
+                fetch(`/api/user`, {
+                    method: 'POST', 
+                    headers: {
+                        'Content-Type': 'application/json', 
+                        'Authorization': `Bearer ${token}`
+                    }, 
+                    body: JSON.stringify({name:data.name, phone:data.phone, address: data.address, email: data.email})
+
+                })
+            }
+            
         }
 
     });

@@ -15,6 +15,7 @@ import logIn from '@/app/firebase/auth/login'
 import { useQueries, useMutation } from '@tanstack/react-query'
 import {useForm, SubmitHandler} from 'react-hook-form'
 import { useAuth } from "@/app/auth-provider"
+import { FirebaseUser } from '@/lib/userFirebaseInterface'
 interface Auth {
     email: string,
     password: string
@@ -23,6 +24,9 @@ interface Auth {
 interface LoginCardProps {
     setSelectedLogin: Dispatch<SetStateAction<boolean>>
 }
+
+
+
 export const LoginCard:FC<LoginCardProps> = (props: LoginCardProps) => {
     let setState = props.setSelectedLogin;
     const { isAuth, setIsAuth } = useAuth();
@@ -33,17 +37,16 @@ export const LoginCard:FC<LoginCardProps> = (props: LoginCardProps) => {
     const router = useRouter();
     const { register, handleSubmit } = useForm<Auth>();
     const onSubmit: SubmitHandler<Auth> = (async (data) => {
-        const { result, error } = await logIn(data.email, data.password); 
+        const { user, error } = await logIn(data.email, data.password); 
         if (error) {
             const err: {code?: string} = error
             console.log(err.code);
         } else {
-            if (result) {
-                const user = result.user;
-                const token = user.accessToken;
-                localStorage.setItem('token', token);
-                setIsAuth(true);
-                router.push('/');
+            if (user && 'accessToken' in user) {
+                const token = user.accessToken as FirebaseUser;
+                localStorage.setItem('token', JSON.stringify(token));
+                // setIsAuth(true);
+                // router.push('/');
             }
            
         }

@@ -15,7 +15,6 @@ export default function Products() {
         }
     })
     if (isLoading || !data) {
-        console.log(data)
         return (
             <div>Loading</div>
         )
