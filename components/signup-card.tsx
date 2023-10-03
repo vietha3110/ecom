@@ -57,7 +57,8 @@ export const SignUpCard:FC<LoginCardProps> =  (props: LoginCardProps) => {
             console.log(err)
             return;
         } else {
-            router.push('/')
+            // router.push('/')
+            //access token save local storage
         }
 
     });
