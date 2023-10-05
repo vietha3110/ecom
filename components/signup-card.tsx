@@ -47,6 +47,7 @@ export const SignUpCard:FC<LoginCardProps> =  (props: LoginCardProps) => {
     const router = useRouter();
    
     const [err, setErr] = useState<string>('');
+    const [alertBanner, setAlertBanner] = useState<Boolean>(false);
     const { register, handleSubmit } = useForm<InputUser>();
     const mutation = useMutation(
         (data: InputUser) => {
@@ -74,8 +75,12 @@ export const SignUpCard:FC<LoginCardProps> =  (props: LoginCardProps) => {
                 setErr('there is an error, please try again');
             },
             onSuccess: () => {
-                setState(true);
-                // will add alertion here
+                setAlertBanner(true);
+                setTimeout(() => {
+                    setState(true);
+                }, 2000)
+                
+               
             }
         }
     );
@@ -166,6 +171,16 @@ return (
                 </span>
             </CardFooter>
         </form>
+        {
+            alertBanner && 
+            <Alert>
+                <Terminal className="h-4 w-4" />
+                <AlertTitle>Sign up successfully</AlertTitle>
+                <AlertDescription>
+                    You can now login using your email and password.
+                </AlertDescription>
+                </Alert>
+        }
     </Card>
   )
 }
