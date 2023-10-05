@@ -14,7 +14,6 @@ export async function GET() {
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        console.log(body)
         const newProduct = await db.product.create({
             data: {
                 name: body.name,
@@ -24,6 +23,7 @@ export async function POST(request: Request) {
                 discount: body.discount
             }
         });
+        console.log('um running')
         return NextResponse.json(newProduct, { status: 201 });
     } catch (e) {
         console.log(e);

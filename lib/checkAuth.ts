@@ -10,10 +10,11 @@ export async function checkAuth() {
     if (authorization?.startsWith('Bearer')) {
         const idToken = authorization.split('Bearer ')[1];
         const decodedToken = await auth().verifyIdToken(idToken);
-        const uid = decodedToken?.uid;
-        const email = decodedToken?.email;
-        const userFirebase = await auth().getUserByEmail(email); 
-        return userFirebase.uid === uid;
+        if (!decodedToken) {
+            return NextResponse.json({ 'message': 'Unauthorized' }, { status: 403 });
+        } else {
+            return decodedToken?.uid
+        }
     } else {
         return NextResponse.json({ 'message': 'Unauthorized' }, { status: 403 });
     }
