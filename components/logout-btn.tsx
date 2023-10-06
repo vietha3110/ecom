@@ -3,6 +3,7 @@ import { DropdownMenuItem, DropdownMenuShortcut } from '@/components/ui/dropdown
 import logOut from '@/app/firebase/auth/logout'
 import Link from 'next/link'
 import { useAuth } from '@/app/auth-provider'
+
 export default function LogoutBtn() {
     const props = useAuth();
     const handleLogout = async () => {
@@ -17,10 +18,13 @@ export default function LogoutBtn() {
         //         console.log(result);
         //     }
         // }
-        const res = await fetch(`/api/auth/logout`)
-        props.setIsAuth(false)
+        const res = await fetch(`/api/auth/logout`);
+        if (res) {
+            
+            props.setIsAuth(false)
+            localStorage.removeItem('token');
+        }
         
-       localStorage.removeItem('token');
     }
     return (
         <Link href='/login'>

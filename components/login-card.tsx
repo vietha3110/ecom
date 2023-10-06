@@ -33,7 +33,6 @@ export const LoginCard:FC<LoginCardProps> = (props: LoginCardProps) => {
     const handleClick = () => {
         setState(false);
     }
-   
     const router = useRouter();
     const { register, handleSubmit } = useForm<Auth>();
     const onSubmit: SubmitHandler<Auth> = (async (data) => {
@@ -45,14 +44,11 @@ export const LoginCard:FC<LoginCardProps> = (props: LoginCardProps) => {
             if (user && 'accessToken' in user) {
                 const token = user.accessToken as FirebaseUser;
                 localStorage.setItem('token', JSON.stringify(token));
-                // setIsAuth(true);
-                // router.push('/');
+                setIsAuth(true);
+                router.push('/');
             }
-           
         }
     })
-
-
     return (
             <Card className='w-1/3' >
                 <form onSubmit={handleSubmit(onSubmit)}>

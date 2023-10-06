@@ -51,20 +51,20 @@ export const SignUpCard:FC<LoginCardProps> =  (props: LoginCardProps) => {
     const { register, handleSubmit } = useForm<InputUser>();
     const mutation = useMutation(
         (data: InputUser) => {
-          const token = JSON.parse(localStorage.getItem('token') || ''); // Retrieve the token from local storage
-          return fetch(`/api/user`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({
-              name: data.name,
-              phone: data.phone,
-              address: data.address,
-              email: data.email
-            })
-          });
+            const token = JSON.parse(localStorage.getItem('token') || ''); // Retrieve the token from local storage
+            return fetch(`/api/user`, {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                name: data.name,
+                phone: data.phone,
+                address: data.address,
+                email: data.email
+                })
+            });
         },
         {
             onMutate: async (data: InputUser) => {
@@ -78,9 +78,7 @@ export const SignUpCard:FC<LoginCardProps> =  (props: LoginCardProps) => {
                 setAlertBanner(true);
                 setTimeout(() => {
                     setState(true);
-                }, 2000)
-                
-               
+                }, 2000)  
             }
         }
     );
