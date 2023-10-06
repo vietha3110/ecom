@@ -5,6 +5,7 @@ import Layout from '@/components/Layout'
 import { useAuth } from '../auth-provider'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import ProductCard from '@/components/product-cart'
 export default function Cart() {
     const { isAuth } = useAuth();
 
@@ -28,6 +29,7 @@ export default function Cart() {
                         {
                             !isAuth && <Link href={`/login`}> <Button>Login</Button></Link>
                         }
+                        <ProductCard/>
                     </CardContent>
                 </Card>
             </div>
