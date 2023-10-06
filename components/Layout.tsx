@@ -51,8 +51,8 @@ export default function Layout({children}: {children: React.ReactNode}) {
                 isAuth && <UserDropDown />
               }
             </li>
-            <li>
-              <ShoppingCart/>
+            <li className='flex items-center'>
+              <Link href={`/cart`}><ShoppingCart/></Link>
             </li>
           </ul>
         </div>
