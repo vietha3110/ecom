@@ -19,7 +19,12 @@ export function useAuth() {
 
 export default function AuthProvider({ children }: { children: React.ReactNode }) {
     const [isAuth, setIsAuth] = useState(false); 
-   
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            setIsAuth(true);
+        }
+    }, [setIsAuth])
     return (
         <UserContext.Provider value={{isAuth, setIsAuth}}>
             {children}

@@ -6,7 +6,6 @@ import { useAuth } from './auth-provider'
 import Layout from '@/components/Layout'
 export default function Home() {
   const {isAuth, setIsAuth} = useAuth();
-
   return (
       <Layout>
         <main className='md:flex min-h-screen md:flex-col md:mx-8 sm:mx-4 sm:flex-cols'>

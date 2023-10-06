@@ -1,18 +1,33 @@
+'use client'
+
 import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from '@/components/ui/card'
 import Layout from '@/components/Layout'
-
-
+import { useAuth } from '../auth-provider'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 export default function Cart() {
+    const { isAuth } = useAuth();
+
     return (
         <Layout>
             <div className='flex mx-8 min-h-screen flex-col'>
                 <div className='h-[100px]'></div>
                 <Card>
                     <CardHeader>
-                        Your Cart is empty
+                        {
+                            !isAuth && <CardTitle>Your cart is empty</CardTitle>
+                        }
+                        {
+                            isAuth && <CardTitle>Shopping cart</CardTitle>
+                        }
                     </CardHeader>
                     <CardContent>
-                        Sign in or Sign up
+                        {
+                            isAuth && <span> Hello, User</span>
+                        }
+                        {
+                            !isAuth && <Link href={`/login`}> <Button>Login</Button></Link>
+                        }
                     </CardContent>
                 </Card>
             </div>
