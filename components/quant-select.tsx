@@ -14,18 +14,18 @@ export function SelectDemo() {
     return (
         <Select>
             <SelectTrigger className='w-[180px]'>
-                <SelectValue placeholder='Select a fruit' />
+                <SelectValue placeholder='Quant:1' />
             </SelectTrigger>
             <SelectContent>
                 <SelectGroup>
                 <SelectLabel>Quant</SelectLabel>
                 {
                         numbs.map(num => 
-                            <SelectItem value={num} key={num}>{num}</SelectItem>
+                            <SelectItem value={`${num}`} key={num}>{num}</SelectItem>
                         )        
                 }
                 </SelectGroup>
             </SelectContent>
-            </Select>
+        </Select>
     )
 }

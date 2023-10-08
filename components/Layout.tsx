@@ -26,7 +26,7 @@ export default function Layout({children}: {children: React.ReactNode}) {
 
   return (
     <>
-      <nav className='w-full px-4 flex flex-row h-[60px] border-b-2 border-b-slate-100 items-center absolute top-0'>
+      <nav className='w-full px-8 flex flex-row h-[60px] border-b-2 border-b-slate-100 items-center absolute top-0'>
         <Link href={'/'}>
           <Image
             src='/images/mamalogo.jpeg'
@@ -43,7 +43,7 @@ export default function Layout({children}: {children: React.ReactNode}) {
                 {item.name}
               </Link>
             </li>)}
-            <li>
+            <li className='border-none'>
               {
                 !isAuth && <Link href={`/login`} className='flex items-center justify-center h-full'>Login</Link>
               }

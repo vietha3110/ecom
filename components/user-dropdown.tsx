@@ -24,9 +24,9 @@ export function UserDropDown() {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant='outline'>User</Button>
+                <Button variant='ghost'>User</Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className='w-56'>
+            <DropdownMenuContent className='w-48'>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                     <DropdownMenuGroup>

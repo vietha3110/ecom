@@ -14,7 +14,7 @@ import { Dispatch, SetStateAction, FC, useState} from 'react'
 import { useRouter } from 'next/navigation'
 import { checkEmail } from '@/utils/check/formCheck'
 import { AlertCircle, FileWarning, Terminal } from 'lucide-react'
-import { useQueries, useMutation } from "@tanstack/react-query"
+import { useQueries, useMutation } from '@tanstack/react-query'
 import {
   Alert,
   AlertDescription,
