@@ -8,7 +8,6 @@ import { ThemeProvider } from '@/components/theme-provider'
 import { ModeToggle } from '@/components/toggle'
 import { Button } from '@/components/ui/button'
 import { ShoppingBasket, Menu } from 'lucide-react'
-import { Providers } from './providers'
 import QueryProviders from './queryProdivers'
 import { UserDropDown } from '@/components/user-dropdown'
 import { useEffect, useState } from 'react'
@@ -52,9 +51,9 @@ export default function RootLayout({
             disableTransitionOnChange
           > */}
           <AuthProvider>
-            <Providers>
+           
                 {children}
-            </Providers>
+           
            </AuthProvider>
           {/* </ThemeProvider> */}
         </QueryProviders>

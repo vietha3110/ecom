@@ -1,6 +1,5 @@
 'use client'
 import Link from 'next/link'
-import { Card, CardHeader, CardBody, CardFooter, Stack, Heading, Text, Divider, ButtonGroup, Image } from '@chakra-ui/react'
 import { Button } from '@/components/ui/button'
 import { useQuery } from '@tanstack/react-query'
 import Layout from '@/components/Layout'
@@ -28,7 +27,7 @@ export default function Products() {
                 <div className='flex mx-8 min-h-screen flex-col'>
                     <div className='h-[100px]'></div>
                     <div className='w-full lg:grid lg:grid-cols-4 gap-4 md:grid md:grid-cols-3'>
-                        {
+                        {/* {
                             data.map((product: {id: string, name: string, description: string, price: number}) =>
                                 <Card maxW='sm' key={product.id}>
                                     <Link key={product.id} href={`/products/${product.id}`}>
@@ -62,7 +61,7 @@ export default function Products() {
                                     </CardFooter>
                                 </Card>
                             )
-                        }
+                        } */}
                     </div>
                 </div>
             </Layout>
