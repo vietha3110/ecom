@@ -3,6 +3,15 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { useQuery } from '@tanstack/react-query'
 import Layout from '@/components/Layout'
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+    CardDescription,
+    CardFooter
+} from '@/components/ui/card'
+import Image from 'next/image'
 
 export default function Products() {
     const {isError, data, isLoading, error } = useQuery({
@@ -27,41 +36,34 @@ export default function Products() {
                 <div className='flex mx-8 min-h-screen flex-col'>
                     <div className='h-[100px]'></div>
                     <div className='w-full lg:grid lg:grid-cols-4 gap-4 md:grid md:grid-cols-3'>
-                        {/* {
+                        {
                             data.map((product: {id: string, name: string, description: string, price: number}) =>
-                                <Card maxW='sm' key={product.id}>
+                                <Card key={product.id}>
                                     <Link key={product.id} href={`/products/${product.id}`}>
                                         <Image
                                             src='/images/bokho.jpeg'
                                             alt='product'
-                                            borderRadius='lg'
+                                            height={400}
+                                            width={400}
                                         />
-                                        <CardBody>
-                                            <Stack mt='6' spacing='3'>
-                                                <Heading size='md'>{product.name}</Heading>
-                                            <Text>
+                                        <CardContent>
+                                            <CardTitle>{product.name}</CardTitle>
+                                            <CardDescription>
                                                 {product.description}
-                                            </Text>
-                                            <Text color='blue.600' fontSize='2xl'>
+                                            </CardDescription>
+                                            <p>
                                                 {product.price}
-                                            </Text>
-                                            </Stack>
-                                        </CardBody>
-                                        <Divider />
+                                            </p>
+                                           
+                                        </CardContent>
+                                        
                                     </Link>
                                     <CardFooter>
-                                    <ButtonGroup px={2} display={'flex'} justifyContent={'space-between'} w={'100%'}>
-                                        <Button >
-                                            Buy now
-                                        </Button>
-                                        <Button >
-                                            Add to cart
-                                        </Button>
-                                        </ButtonGroup>
+                                        <Button>Adopt Now</Button>
                                     </CardFooter>
                                 </Card>
                             )
-                        } */}
+                        }
                     </div>
                 </div>
             </Layout>
