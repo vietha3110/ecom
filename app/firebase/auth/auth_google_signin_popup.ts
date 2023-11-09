@@ -4,7 +4,8 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 const auth = getAuth(firebase_app);
 const provider = new GoogleAuthProvider();
 
-signInWithPopup(auth, provider)
+export default function loginWithGoogle() {
+    signInWithPopup(auth, provider)
     .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         if (credential) {
@@ -18,3 +19,6 @@ signInWithPopup(auth, provider)
         const email = error.customData.email;
         console.log(errorMessage, errorCode)
     })
+
+}
+ 
